@@ -1,0 +1,60 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "ca65",
+            "type": "shell",
+            "command": "C:\\Users\\ctige\\Downloads\\cc65-snapshot-win64\\bin\\ca65.exe",
+            "args": [
+                "-D",
+                "arduino",
+                "${file}",
+                "-o",
+                "arduino.o"
+            ],
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
+        },
+        {
+            "label": "ld65",
+            "dependsOn":"ca65",
+            "type": "shell",
+            "command": "C:\\Users\\ctige\\Downloads\\cc65-snapshot-win64\\bin\\ld65.exe",
+            "args": [
+                "-C",
+                "arduino.cfg",
+                "C:\\Users\\ctige\\OneDrive\\Documents\\Code\\msbasic\\arduino.o",
+                "-o",
+                "arduino.bin",
+                "-Ln",
+                "arduino.lbl"
+            ],
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
+        },
+        {
+            "label": "powershell",
+            "dependsOn":"ld65",
+            "type": "shell",
+            "command": "powershell.exe",
+            "args": [
+                "-NonInteractive",
+                "-File",
+                "C:\\Users\\ctige\\OneDrive\\Documents\\Code\\msbasic\\convertToIno.ps1"
+            ],
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}
